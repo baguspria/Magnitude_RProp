@@ -1,5 +1,12 @@
+#imports
 import numpy as np
+import pandas as pd
 
+#returns df of selected col indexes from csv
+def fetch_data(dir, filenames, col_idx):
+    return pd.concat([pd.read_csv(dir+file, usecols=col_idx) for file in filenames])
+
+#returns zip of min and max longitudes & latitudes
 def grid_num(lats, longs, x_grids, y_grids):
     #calc length and width of one grid
     length = (np.max(lats)-np.min(lats)) / y_grids
@@ -17,4 +24,14 @@ def grid_num(lats, longs, x_grids, y_grids):
     
     #create zip of longs-lats
     return [(i, j) for i in lat_grids for j in long_grids]
+
+
+#---------------------M A I N-----------------------#
+
+dir = 'USGS datasets/'
+filenames = ['2000-2005.csv', '2006-2013.csv', '2014-2019.csv']
+col_idx = [0,1,2,4]
+
+data = fetch_data(dir, filenames, col_idx)
+
 

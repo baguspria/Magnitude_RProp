@@ -1,0 +1,10 @@
+starttime=2000-01-01 00:00:00
+endtime=2019-12-31 23:59:59
+maxlatitude=5.907
+minlatitude=-10.909
+maxlongitude=140.976
+minlongitude=95.206
+minmagnitude=1
+maxmagnitude=10
+reviewstatus=reviewed
+orderby=time-asc
