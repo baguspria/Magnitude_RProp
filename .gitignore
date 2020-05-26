@@ -1,1 +1,19 @@
 test.py
+Tests 1/epoch 100, rep 10 sig test--2.csv
+Tests 1/epoch 100, rep 10 tanh test.csv
+.gitignore
+Tests 1/epoch 100, rep 10, sig test.csv
+Tests 1/epoch test.csv
+.vscode/settings.json
+Tests 1/epoch test.xlsx
+Tests 1/epoch test2.csv
+Tests 1/epoch test3.csv
+Tests 1/epoch test4.csv
+Tests 1/epoch test5.csv
+Tests 1/errors.csv
+Tests 1/errors.xlsx
+Tests 1/hidden test.csv
+Tests 1/hidden test.xlsx
+Tests 1/rep1.csv
+Tests 1/rep2.csv
+Tests 1/rep3.csv

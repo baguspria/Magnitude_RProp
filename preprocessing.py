@@ -2,12 +2,12 @@
 # - Create class
 # - Make sure no hardcode variables (make it accessible anywhere, and not fail on any type of data)
 
-class Preprocessing:
+#imports
+import numpy as np
+import pandas as pd
+import math, datetime
 
-    #imports
-    import numpy as np
-    import pandas as pd
-    import math, datetime
+class Preprocessing:
 
     #override round (round up if val >= 5)
     def round(self, x, dec=0):
@@ -71,11 +71,14 @@ class Preprocessing:
     #returns date-pair (weekly)
     def date_pair(self, time):
         ids=[0]
+        
+        #get indexes of next 7 days
         while True:
             x = np.searchsorted(time, time[ids[-1]]+datetime.timedelta(days=6), side='right')
             ids.append(x)
             if x >= len(time): break
-            
+
+        #make date-pairs    
         start_date = time.reindex(ids).reset_index(drop=True)
         end_date = time.reindex(np.array(ids[1:])-1).reset_index(drop=True)
 
@@ -87,7 +90,7 @@ class Preprocessing:
     #returns final dataset
     def get_data(self, dir, filenames, col_idx):
         #fetching raw data
-        raw = fetch_data(dir, filenames, col_idx)
+        raw = self.fetch_data(dir, filenames, col_idx)
 
         #get formatted dates only
         raw['time'] = raw['time'].apply(lambda x: datetime.datetime.strptime(x[:10], "%Y-%m-%d"))
@@ -95,16 +98,16 @@ class Preprocessing:
         #grid numbering
         lat = np.array(raw['latitude'])
         long = np.array(raw['longitude'])
-        nummed_grids, boundaries = grid_num(lat, long, 8, 2, [5.907, 140.976], [-10.909, 95.206])
+        nummed_grids, boundaries = self.grid_num(lat, long, 8, 2, [5.907, 140.976], [-10.909, 95.206])
 
         #min-max normalization
-        norm_mag = pd.DataFrame(minmax_norm(raw['mag']), columns=['norm_mag'])
+        norm_mag = pd.DataFrame(self.minmax_norm(raw['mag']), columns=['norm_mag'])
 
         #helper dataset
         raw = pd.concat([raw['time'], nummed_grids['grid_num'], norm_mag], axis=1)
 
         #create final dataset
-        dates, helper_ids = date_pair(raw['time'])
+        dates, helper_ids = self.date_pair(raw['time'])
         grids = boundaries.index
         arr = []
 
